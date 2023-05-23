@@ -48,6 +48,10 @@ namespace hw_2023_05_20
                         DeserializeObj(ref list);
                         Console.ReadKey();
                         break;
+                    case '5':
+                        SaveToXml(list);
+                        Console.ReadKey();
+                        break;
                 }
             }
             while (key.Key != ConsoleKey.Escape);
@@ -101,6 +105,34 @@ namespace hw_2023_05_20
             }
 
             Console.WriteLine("BinaryDeserialize OK!\n");
+        }
+        static void SaveToXml(List<MusicAlbum> list)
+        {
+            XmlTextWriter xmlText = new XmlTextWriter("albums.xml", System.Text.Encoding.Unicode);
+
+            xmlText.Formatting = Formatting.Indented;
+            xmlText.WriteStartDocument();
+            xmlText.WriteStartElement("albums");
+
+            foreach (var item in list)
+            {
+                xmlText.WriteStartElement("album");
+                xmlText.WriteElementString("name_album", item.NameAlbum);
+                xmlText.WriteElementString("singer", item.Singer);
+                xmlText.WriteElementString("year", item.Year);
+                xmlText.WriteElementString("duration", item.Duration.ToString());
+                xmlText.WriteElementString("lable", item.RecordingStudio);
+                xmlText.WriteEndElement();
+            }
+
+            xmlText.WriteEndElement();
+
+            if (xmlText != null)
+            {
+                xmlText.Close();
+            }
+
+            Console.WriteLine("The albums.xml file is generated!");
         }
     }
 }
