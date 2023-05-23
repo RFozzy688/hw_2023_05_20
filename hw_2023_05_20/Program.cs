@@ -10,6 +10,9 @@ namespace hw_2023_05_20
     {
         static void Main(string[] args)
         {
+            MusicAlbum album = new MusicAlbum();
+            album.AddAlbum();
+            album.PrintAlbum();
         }
     }
 }
