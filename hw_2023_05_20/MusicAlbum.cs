@@ -14,7 +14,7 @@ namespace hw_2023_05_20
         public TimeSpan Duration { get; set; }
         public string RecordingStudio { get; set; }
         public MusicAlbum() { }
-        public void AddAlbum() 
+        public MusicAlbum AddAlbum() 
         {
             Console.Write("Название альбома: ");
             NameAlbum = Console.ReadLine();
@@ -37,6 +37,8 @@ namespace hw_2023_05_20
 
             Console.Write("Студия звукозаписи: ");
             RecordingStudio = Console.ReadLine();
+
+            return this;
         }
         public void PrintAlbum()
         {
