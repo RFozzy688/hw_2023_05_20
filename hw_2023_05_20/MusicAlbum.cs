@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace hw_2023_05_20
 {
-    internal class MusicAlbum
+    [Serializable]
+    public class MusicAlbum
     {
         public string NameAlbum { get; set; }
         public string Singer { get; set; }
@@ -14,7 +15,7 @@ namespace hw_2023_05_20
         public TimeSpan Duration { get; set; }
         public string RecordingStudio { get; set; }
         public MusicAlbum() { }
-        public MusicAlbum AddAlbum() 
+        public void AddAlbum() 
         {
             Console.Write("Название альбома: ");
             NameAlbum = Console.ReadLine();
@@ -29,6 +30,7 @@ namespace hw_2023_05_20
             {
                 Console.Write("Продолжительность (hh:mm:ss): ");
 
+                Duration = new TimeSpan();
                 Duration = TimeSpan.Parse(Console.ReadLine());
             }
             catch (Exception)
@@ -37,8 +39,6 @@ namespace hw_2023_05_20
 
             Console.Write("Студия звукозаписи: ");
             RecordingStudio = Console.ReadLine();
-
-            return this;
         }
         public void PrintAlbum()
         {
