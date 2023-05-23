@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
+using NLog;
 
 namespace hw_2023_05_20
 {
@@ -55,7 +56,6 @@ namespace hw_2023_05_20
                 }
             }
             while (key.Key != ConsoleKey.Escape);
-
         }
         static void AddAlbum(ref List<MusicAlbum> list)
         {
@@ -87,21 +87,32 @@ namespace hw_2023_05_20
         static void SerializeObj(List<MusicAlbum> list)
         {
             BinaryFormatter bf = new BinaryFormatter();
+            Logger logger = LogManager.GetCurrentClassLogger();
 
             using (Stream stream = File.Create("data.bin"))
             {
                 bf.Serialize(stream, list);
+                logger.Info("Serialize success");
             }
 
             Console.WriteLine("BinarySerialize OK!\n");
+
         }
         static void DeserializeObj(ref List<MusicAlbum> list)
         {
             BinaryFormatter bf = new BinaryFormatter();
+            Logger logger = LogManager.GetCurrentClassLogger();
 
-            using (Stream stream = File.OpenRead("data.bin"))
+            try
             {
-                list = (List<MusicAlbum>)bf.Deserialize(stream);
+                using (Stream stream = File.OpenRead("data.bin"))
+                {
+                    list = (List<MusicAlbum>)bf.Deserialize(stream);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
             }
 
             Console.WriteLine("BinaryDeserialize OK!\n");
@@ -109,6 +120,7 @@ namespace hw_2023_05_20
         static void SaveToXml(List<MusicAlbum> list)
         {
             XmlTextWriter xmlText = new XmlTextWriter("albums.xml", System.Text.Encoding.Unicode);
+            Logger logger = LogManager.GetCurrentClassLogger();
 
             xmlText.Formatting = Formatting.Indented;
             xmlText.WriteStartDocument();
@@ -133,6 +145,8 @@ namespace hw_2023_05_20
             }
 
             Console.WriteLine("The albums.xml file is generated!");
+
+            logger.Info("The albums.xml file is generated!");
         }
     }
 }
